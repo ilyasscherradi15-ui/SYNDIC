@@ -6,20 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('occupants', function (Blueprint $table) {
             $table->id();
+            $table->string('nom_complet');
+            $table->string('telephone')->nullable();
+            $table->string('email')->nullable();
+            $table->date('date_entree');
+            $table->date('date_sortie')->nullable();
+            $table->foreignId('logement_id')->constrained('logements')->onDelete('cascade');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('occupants');
