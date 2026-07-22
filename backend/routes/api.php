@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\Api\LogementController;
 use App\Http\Controllers\Api\ProprietaireController;
 use App\Http\Controllers\Api\ImmeubleController;
 use App\Http\Controllers\Api\ResidenceController;
@@ -12,3 +13,4 @@ Route::get('/user', function (Request $request) {
 Route::apiResource('residences', ResidenceController::class);
 Route::apiResource('immeubles', ImmeubleController::class);
 Route::apiResource('proprietaires', ProprietaireController::class);
+Route::apiResource('logements', LogementController::class);
