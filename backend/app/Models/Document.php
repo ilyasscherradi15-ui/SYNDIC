@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Document extends Model
 {
-    protected $fillable = ['nom', 'chemin'];
+    protected $fillable = ['nom', 'chemin', 'documentable_type', 'documentable_id'];
 
     public function documentable(): MorphTo
     {
