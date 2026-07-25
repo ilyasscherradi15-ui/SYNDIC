@@ -1,3 +1,4 @@
+import { Documents } from './pages/documents/documents';
 import { Depenses } from './pages/depenses/depenses';
 import { Paiements } from './pages/paiements/paiements';
 import { Cotisations } from './pages/cotisations/cotisations';
@@ -22,4 +23,5 @@ export const routes: Routes = [
   { path: 'cotisations', component: Cotisations },
   { path: 'paiements', component: Paiements },
   { path: 'depenses', component: Depenses },
+  { path: 'documents', component: Documents },
 ];

@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Modifier' : 'Nouveau' }} document</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nom</mat-label>
+    <input matInput [(ngModel)]="item.nom" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Chemin</mat-label>
+    <input matInput [(ngModel)]="item.chemin" placeholder="documents/fichier.pdf" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width" *ngIf="!isEdit">
+    <mat-label>Type lié</mat-label>
+    <mat-select [(ngModel)]="item.documentable_type">
+      <mat-option value="depense">Dépense</mat-option>
+      <mat-option value="logement">Logement</mat-option>
+      <mat-option value="residence">Résidence</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width" *ngIf="!isEdit">
+    <mat-label>ID lié</mat-label>
+    <input matInput type="number" [(ngModel)]="item.documentable_id" required />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Annuler</button>
+  <button mat-raised-button color="primary" (click)="save()">Enregistrer</button>
+</mat-dialog-actions>
