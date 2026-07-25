@@ -1,3 +1,4 @@
+import { Depenses } from './pages/depenses/depenses';
 import { Paiements } from './pages/paiements/paiements';
 import { Cotisations } from './pages/cotisations/cotisations';
 import { Occupants } from './pages/occupants/occupants';
@@ -20,4 +21,5 @@ export const routes: Routes = [
   { path: 'occupants', component: Occupants },
   { path: 'cotisations', component: Cotisations },
   { path: 'paiements', component: Paiements },
+  { path: 'depenses', component: Depenses },
 ];
