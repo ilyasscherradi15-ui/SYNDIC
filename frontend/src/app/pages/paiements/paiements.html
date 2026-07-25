@@ -1,0 +1,36 @@
+<div class="page">
+  <div class="header">
+    <h1>Paiements</h1>
+    <button mat-raised-button color="primary" (click)="openCreate()">
+      <mat-icon>add</mat-icon> Nouveau paiement
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="items" class="mat-elevation-z2">
+    <ng-container matColumnDef="montant">
+      <th mat-header-cell *matHeaderCellDef>Montant</th>
+      <td mat-cell *matCellDef="let r">{{ r.montant }} DH</td>
+    </ng-container>
+    <ng-container matColumnDef="date_paiement">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let r">{{ r.date_paiement }}</td>
+    </ng-container>
+    <ng-container matColumnDef="moyen_paiement">
+      <th mat-header-cell *matHeaderCellDef>Moyen</th>
+      <td mat-cell *matCellDef="let r">{{ r.moyen_paiement }}</td>
+    </ng-container>
+    <ng-container matColumnDef="cotisation_id">
+      <th mat-header-cell *matHeaderCellDef>Cotisation (ID)</th>
+      <td mat-cell *matCellDef="let r">{{ r.cotisation_id }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let r">
+        <button mat-icon-button color="primary" (click)="openEdit(r)"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="deleteItem(r.id!)"><mat-icon>delete</mat-icon></button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

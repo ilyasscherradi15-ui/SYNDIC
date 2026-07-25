@@ -1,3 +1,4 @@
+import { Paiements } from './pages/paiements/paiements';
 import { Cotisations } from './pages/cotisations/cotisations';
 import { Occupants } from './pages/occupants/occupants';
 import { Logements } from './pages/logements/logements';
@@ -18,4 +19,5 @@ export const routes: Routes = [
   { path: 'logements', component: Logements },
   { path: 'occupants', component: Occupants },
   { path: 'cotisations', component: Cotisations },
+  { path: 'paiements', component: Paiements },
 ];
