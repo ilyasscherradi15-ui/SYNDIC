@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Modifier' : 'Nouvelle' }} cotisation</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Type</mat-label>
+    <mat-select [(ngModel)]="item.type">
+      <mat-option value="mensuelle">Mensuelle</mat-option>
+      <mat-option value="trimestrielle">Trimestrielle</mat-option>
+      <mat-option value="annuelle">Annuelle</mat-option>
+      <mat-option value="exceptionnelle">Exceptionnelle</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Montant (DH)</mat-label>
+    <input matInput type="number" [(ngModel)]="item.montant" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Date d'échéance</mat-label>
+    <input matInput type="date" [(ngModel)]="item.date_echeance" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width" *ngIf="isEdit">
+    <mat-label>Statut</mat-label>
+    <mat-select [(ngModel)]="item.statut">
+      <mat-option value="non_payee">Non payée</mat-option>
+      <mat-option value="partielle">Partielle</mat-option>
+      <mat-option value="payee">Payée</mat-option>
+      <mat-option value="retard">En retard</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>ID Logement</mat-label>
+    <input matInput type="number" [(ngModel)]="item.logement_id" required />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Annuler</button>
+  <button mat-raised-button color="primary" (click)="save()">Enregistrer</button>
+</mat-dialog-actions>
