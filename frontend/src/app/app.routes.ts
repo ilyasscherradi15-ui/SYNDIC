@@ -1,3 +1,4 @@
+import { Logements } from './pages/logements/logements';
 import { Proprietaires } from './pages/proprietaires/proprietaires';
 import { Immeubles } from './pages/immeubles/immeubles';
 import { Routes } from '@angular/router';
@@ -12,4 +13,5 @@ export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'immeubles', component: Immeubles },
   { path: 'proprietaires', component: Proprietaires },
+  { path: 'logements', component: Logements },
 ];

@@ -1,0 +1,54 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Modifier' : 'Nouveau' }} logement</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Numéro</mat-label>
+    <input matInput [(ngModel)]="item.numero" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Type</mat-label>
+    <mat-select [(ngModel)]="item.type">
+      <mat-option value="appartement">Appartement</mat-option>
+      <mat-option value="villa">Villa</mat-option>
+      <mat-option value="duplex">Duplex</mat-option>
+      <mat-option value="bungalow">Bungalow</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Surface (m²)</mat-label>
+    <input matInput type="number" [(ngModel)]="item.surface" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Quote-part (%)</mat-label>
+    <input matInput type="number" [(ngModel)]="item.quote_part" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Statut</mat-label>
+    <mat-select [(ngModel)]="item.statut">
+      <mat-option value="vacant">Vacant</mat-option>
+      <mat-option value="occupe">Occupé</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>ID Résidence</mat-label>
+    <input matInput type="number" [(ngModel)]="item.residence_id" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>ID Immeuble (optionnel)</mat-label>
+    <input matInput type="number" [(ngModel)]="item.immeuble_id" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>ID Propriétaire</mat-label>
+    <input matInput type="number" [(ngModel)]="item.proprietaire_id" required />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Annuler</button>
+  <button mat-raised-button color="primary" (click)="save()">Enregistrer</button>
+</mat-dialog-actions>
