@@ -1,3 +1,4 @@
+import { Occupants } from './pages/occupants/occupants';
 import { Logements } from './pages/logements/logements';
 import { Proprietaires } from './pages/proprietaires/proprietaires';
 import { Immeubles } from './pages/immeubles/immeubles';
@@ -14,4 +15,5 @@ export const routes: Routes = [
   { path: 'immeubles', component: Immeubles },
   { path: 'proprietaires', component: Proprietaires },
   { path: 'logements', component: Logements },
+  { path: 'occupants', component: Occupants },
 ];
