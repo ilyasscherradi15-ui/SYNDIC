@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Modifier' : 'Nouveau' }} propriétaire</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nom complet</mat-label>
+    <input matInput [(ngModel)]="item.nom_complet" required />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>CIN</mat-label>
+    <input matInput [(ngModel)]="item.cin" required />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Téléphone</mat-label>
+    <input matInput [(ngModel)]="item.telephone" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" [(ngModel)]="item.email" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Adresse</mat-label>
+    <input matInput [(ngModel)]="item.adresse" />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Annuler</button>
+  <button mat-raised-button color="primary" (click)="save()">Enregistrer</button>
+</mat-dialog-actions>

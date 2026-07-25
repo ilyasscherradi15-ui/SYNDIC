@@ -1,0 +1,36 @@
+<div class="page">
+  <div class="header">
+    <h1>Propriétaires</h1>
+    <button mat-raised-button color="primary" (click)="openCreate()">
+      <mat-icon>add</mat-icon> Nouveau propriétaire
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="items" class="mat-elevation-z2">
+    <ng-container matColumnDef="nom_complet">
+      <th mat-header-cell *matHeaderCellDef>Nom complet</th>
+      <td mat-cell *matCellDef="let r">{{ r.nom_complet }}</td>
+    </ng-container>
+    <ng-container matColumnDef="cin">
+      <th mat-header-cell *matHeaderCellDef>CIN</th>
+      <td mat-cell *matCellDef="let r">{{ r.cin }}</td>
+    </ng-container>
+    <ng-container matColumnDef="telephone">
+      <th mat-header-cell *matHeaderCellDef>Téléphone</th>
+      <td mat-cell *matCellDef="let r">{{ r.telephone }}</td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let r">{{ r.email }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let r">
+        <button mat-icon-button color="primary" (click)="openEdit(r)"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="deleteItem(r.id!)"><mat-icon>delete</mat-icon></button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
