@@ -1,0 +1,32 @@
+<div class="page">
+  <div class="header">
+    <h1>Immeubles</h1>
+    <button mat-raised-button color="primary" (click)="openCreate()">
+      <mat-icon>add</mat-icon> Nouvel immeuble
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="items" class="mat-elevation-z2">
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef>Nom</th>
+      <td mat-cell *matCellDef="let r">{{ r.nom }}</td>
+    </ng-container>
+    <ng-container matColumnDef="nb_etages">
+      <th mat-header-cell *matHeaderCellDef>Étages</th>
+      <td mat-cell *matCellDef="let r">{{ r.nb_etages }}</td>
+    </ng-container>
+    <ng-container matColumnDef="residence_id">
+      <th mat-header-cell *matHeaderCellDef>Résidence (ID)</th>
+      <td mat-cell *matCellDef="let r">{{ r.residence_id }}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let r">
+        <button mat-icon-button color="primary" (click)="openEdit(r)"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="deleteItem(r.id!)"><mat-icon>delete</mat-icon></button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
