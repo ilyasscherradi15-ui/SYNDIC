@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Modifier' : 'Nouvelle' }} résidence</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nom</mat-label>
+    <input matInput [(ngModel)]="residence.nom" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Adresse</mat-label>
+    <input matInput [(ngModel)]="residence.adresse" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Ville</mat-label>
+    <input matInput [(ngModel)]="residence.ville" required />
+  </mat-form-field>
+
+  <mat-checkbox [(ngModel)]="residence.actif">Active</mat-checkbox>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Annuler</button>
+  <button mat-raised-button color="primary" (click)="save()">Enregistrer</button>
+</mat-dialog-actions>
