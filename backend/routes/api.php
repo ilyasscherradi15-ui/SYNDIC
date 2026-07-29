@@ -26,7 +26,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
 
-    Route::apiResource('residences', ResidenceController::class);
+    Route::apiResource('residences', ResidenceController::class)->only(['index', 'show']);
+
+Route::middleware('role:admin,syndic')->group(function () {
+    Route::apiResource('residences', ResidenceController::class)->except(['index', 'show']);
+});
     Route::apiResource('immeubles', ImmeubleController::class);
     Route::apiResource('proprietaires', ProprietaireController::class);
     Route::apiResource('logements', LogementController::class);
