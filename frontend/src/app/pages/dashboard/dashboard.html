@@ -1,6 +1,53 @@
-
 <div class="dashboard">
-  <h1>Bienvenue sur le Dashboard</h1>
-  <p>Connexion réussie !</p>
-  <a routerLink="/residences">Aller aux résidences</a>
+  <h1>Tableau de bord</h1>
+
+  <div class="cards-grid">
+    <mat-card class="kpi-card">
+      <mat-card-content>
+        <mat-icon>apartment</mat-icon>
+        <div class="kpi-value">{{ nbResidences }}</div>
+        <div class="kpi-label">Résidences</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <mat-card-content>
+        <mat-icon>home</mat-icon>
+        <div class="kpi-value">{{ nbLogements }}</div>
+        <div class="kpi-label">Logements</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <mat-card-content>
+        <mat-icon>payments</mat-icon>
+        <div class="kpi-value">{{ totalCotisationsAttendues }} DH</div>
+        <div class="kpi-label">Cotisations attendues</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="kpi-card success">
+      <mat-card-content>
+        <mat-icon>check_circle</mat-icon>
+        <div class="kpi-value">{{ totalCotisationsEncaissees }} DH</div>
+        <div class="kpi-label">Total encaissé</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="kpi-card warn">
+      <mat-card-content>
+        <mat-icon>warning</mat-icon>
+        <div class="kpi-value">{{ totalImpayes }} DH</div>
+        <div class="kpi-label">Total impayés</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <mat-card-content>
+        <mat-icon>shopping_cart</mat-icon>
+        <div class="kpi-value">{{ totalDepenses }} DH</div>
+        <div class="kpi-label">Total dépenses</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
