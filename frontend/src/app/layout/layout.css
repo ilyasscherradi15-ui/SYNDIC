@@ -1,0 +1,27 @@
+.app-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 240px;
+}
+
+.sidenav-header {
+  padding: 16px;
+}
+
+.sidenav-header h2 {
+  margin: 0;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.content {
+  padding: 0;
+}
+
+.active-link {
+  background-color: rgba(0, 0, 0, 0.08);
+}
