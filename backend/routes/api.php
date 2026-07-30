@@ -19,24 +19,30 @@ Route::post('/login', [AuthController::class, 'login']);
 
 // Routes protégées (nécessitent un token valide)
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
 
+    // Lecture accessible à tous les utilisateurs connectés
     Route::apiResource('residences', ResidenceController::class)->only(['index', 'show']);
+    Route::apiResource('immeubles', ImmeubleController::class)->only(['index', 'show']);
+    Route::apiResource('proprietaires', ProprietaireController::class)->only(['index', 'show']);
+    Route::apiResource('logements', LogementController::class)->only(['index', 'show']);
+    Route::apiResource('occupants', OccupantController::class)->only(['index', 'show']);
+    Route::apiResource('cotisations', CotisationController::class)->only(['index', 'show']);
+    Route::apiResource('paiements', PaiementController::class)->only(['index', 'show']);
+    Route::apiResource('depenses', DepenseController::class)->only(['index', 'show']);
+    Route::apiResource('documents', DocumentController::class)->only(['index', 'show']);
 
-Route::middleware('role:admin,syndic')->group(function () {
-    Route::apiResource('residences', ResidenceController::class)->except(['index', 'show']);
-});
-    Route::apiResource('immeubles', ImmeubleController::class);
-    Route::apiResource('proprietaires', ProprietaireController::class);
-    Route::apiResource('logements', LogementController::class);
-    Route::apiResource('occupants', OccupantController::class);
-    Route::apiResource('cotisations', CotisationController::class);
-    Route::apiResource('paiements', PaiementController::class);
-    Route::apiResource('depenses', DepenseController::class);
-    Route::apiResource('documents', DocumentController::class);
+    // Écriture réservée à admin/syndic
+    Route::middleware('role:admin,syndic')->group(function () {
+        Route::apiResource('residences', ResidenceController::class)->except(['index', 'show']);
+        Route::apiResource('immeubles', ImmeubleController::class)->except(['index', 'show']);
+        Route::apiResource('proprietaires', ProprietaireController::class)->except(['index', 'show']);
+        Route::apiResource('logements', LogementController::class)->except(['index', 'show']);
+        Route::apiResource('occupants', OccupantController::class)->except(['index', 'show']);
+        Route::apiResource('cotisations', CotisationController::class)->except(['index', 'show']);
+        Route::apiResource('paiements', PaiementController::class)->except(['index', 'show']);
+        Route::apiResource('depenses', DepenseController::class)->except(['index', 'show']);
+        Route::apiResource('documents', DocumentController::class)->except(['index', 'show']);
+    });
 });
