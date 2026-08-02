@@ -21,8 +21,10 @@
     <input matInput type="date" [(ngModel)]="item.date_sortie" />
   </mat-form-field>
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>ID Logement</mat-label>
-    <input matInput type="number" [(ngModel)]="item.logement_id" required />
+    <mat-label>Logement</mat-label>
+    <mat-select [(ngModel)]="item.logement_id" required>
+      <mat-option *ngFor="let l of logements" [value]="l.id">{{ l.numero }} ({{ l.type }})</mat-option>
+    </mat-select>
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

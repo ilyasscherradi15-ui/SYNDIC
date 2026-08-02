@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { CotisationService, Cotisation } from '../../../services/cotisation';
+import { LogementService, Logement } from '../../../services/logement';
 
 @Component({
   selector: 'app-cotisation-form-dialog',
@@ -15,16 +16,22 @@ import { CotisationService, Cotisation } from '../../../services/cotisation';
   templateUrl: './cotisation-form-dialog.html',
   styleUrl: './cotisation-form-dialog.css',
 })
-export class CotisationFormDialog {
+export class CotisationFormDialog implements OnInit {
   item: Cotisation = { type: 'mensuelle', montant: 0, date_echeance: '', logement_id: 0 };
   isEdit = false;
+  logements: Logement[] = [];
 
   constructor(
     private service: CotisationService,
+    private logementService: LogementService,
     private dialogRef: MatDialogRef<CotisationFormDialog>,
     @Inject(MAT_DIALOG_DATA) public data: Cotisation | null
   ) {
     if (data) { this.item = { ...data }; this.isEdit = true; }
+  }
+
+  ngOnInit(): void {
+    this.logementService.getAll().subscribe({ next: (data) => (this.logements = data) });
   }
 
   save(): void {
