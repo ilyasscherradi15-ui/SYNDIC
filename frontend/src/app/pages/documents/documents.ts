@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { DocumentService, Document } from '../../services/document';
 import { DocumentFormDialog } from './document-form-dialog/document-form-dialog';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-documents',
@@ -18,7 +19,7 @@ export class Documents implements OnInit {
   items: Document[] = [];
   displayedColumns = ['nom', 'chemin', 'documentable_type', 'documentable_id', 'actions'];
 
-  constructor(private service: DocumentService, private dialog: MatDialog) {}
+  constructor(private service: DocumentService, private dialog: MatDialog, public authService: AuthService) {}
 
   ngOnInit(): void { this.load(); }
 
@@ -37,7 +38,6 @@ export class Documents implements OnInit {
   }
 
   deleteItem(id: number): void {
-    if (!confirm('Supprimer ce document ?')) return;
     this.service.delete(id).subscribe({ next: () => this.load() });
   }
 }

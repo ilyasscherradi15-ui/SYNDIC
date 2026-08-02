@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { OccupantService, Occupant } from '../../services/occupant';
 import { OccupantFormDialog } from './occupant-form-dialog/occupant-form-dialog';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-occupants',
@@ -18,7 +19,7 @@ export class Occupants implements OnInit {
   items: Occupant[] = [];
   displayedColumns = ['nom_complet', 'telephone', 'date_entree', 'date_sortie', 'logement_id', 'actions'];
 
-  constructor(private service: OccupantService, private dialog: MatDialog) {}
+  constructor(private service: OccupantService, private dialog: MatDialog, public authService: AuthService) {}
 
   ngOnInit(): void { this.load(); }
 
@@ -37,7 +38,6 @@ export class Occupants implements OnInit {
   }
 
   deleteItem(id: number): void {
-    if (!confirm('Supprimer cet occupant ?')) return;
     this.service.delete(id).subscribe({ next: () => this.load() });
   }
 }

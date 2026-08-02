@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { ProprietaireService, Proprietaire } from '../../services/proprietaire';
 import { ProprietaireFormDialog } from './proprietaire-form-dialog/proprietaire-form-dialog';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-proprietaires',
@@ -18,7 +19,7 @@ export class Proprietaires implements OnInit {
   items: Proprietaire[] = [];
   displayedColumns = ['nom_complet', 'cin', 'telephone', 'email', 'actions'];
 
-  constructor(private service: ProprietaireService, private dialog: MatDialog) {}
+  constructor(private service: ProprietaireService, private dialog: MatDialog, public authService: AuthService) {}
 
   ngOnInit(): void { this.load(); }
 
@@ -37,7 +38,6 @@ export class Proprietaires implements OnInit {
   }
 
   deleteItem(id: number): void {
-    if (!confirm('Supprimer ce propriétaire ?')) return;
     this.service.delete(id).subscribe({ next: () => this.load() });
   }
 }

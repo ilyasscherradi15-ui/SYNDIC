@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { LogementService, Logement } from '../../services/logement';
 import { LogementFormDialog } from './logement-form-dialog/logement-form-dialog';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-logements',
@@ -18,7 +19,7 @@ export class Logements implements OnInit {
   items: Logement[] = [];
   displayedColumns = ['numero', 'type', 'quote_part', 'statut', 'residence_id', 'proprietaire_id', 'actions'];
 
-  constructor(private service: LogementService, private dialog: MatDialog) {}
+  constructor(private service: LogementService, private dialog: MatDialog, public authService: AuthService) {}
 
   ngOnInit(): void { this.load(); }
 
@@ -37,7 +38,6 @@ export class Logements implements OnInit {
   }
 
   deleteItem(id: number): void {
-    if (!confirm('Supprimer ce logement ?')) return;
     this.service.delete(id).subscribe({ next: () => this.load() });
   }
 }

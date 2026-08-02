@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { ImmeubleService, Immeuble } from '../../services/immeuble';
 import { ImmeubleFormDialog } from './immeuble-form-dialog/immeuble-form-dialog';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-immeubles',
@@ -18,7 +19,7 @@ export class Immeubles implements OnInit {
   items: Immeuble[] = [];
   displayedColumns = ['nom', 'nb_etages', 'residence_id', 'actions'];
 
-  constructor(private service: ImmeubleService, private dialog: MatDialog) {}
+  constructor(private service: ImmeubleService, private dialog: MatDialog, public authService: AuthService) {}
 
   ngOnInit(): void { this.load(); }
 
@@ -37,7 +38,6 @@ export class Immeubles implements OnInit {
   }
 
   deleteItem(id: number): void {
-    if (!confirm('Supprimer cet immeuble ?')) return;
     this.service.delete(id).subscribe({ next: () => this.load() });
   }
 }

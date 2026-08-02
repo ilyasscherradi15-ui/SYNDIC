@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { CotisationService, Cotisation } from '../../services/cotisation';
 import { CotisationFormDialog } from './cotisation-form-dialog/cotisation-form-dialog';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-cotisations',
@@ -18,7 +19,7 @@ export class Cotisations implements OnInit {
   items: Cotisation[] = [];
   displayedColumns = ['type', 'montant', 'date_echeance', 'statut', 'logement_id', 'actions'];
 
-  constructor(private service: CotisationService, private dialog: MatDialog) {}
+  constructor(private service: CotisationService, private dialog: MatDialog, public authService: AuthService) {}
 
   ngOnInit(): void { this.load(); }
 
@@ -37,7 +38,6 @@ export class Cotisations implements OnInit {
   }
 
   deleteItem(id: number): void {
-    if (!confirm('Supprimer cette cotisation ?')) return;
     this.service.delete(id).subscribe({ next: () => this.load() });
   }
 }

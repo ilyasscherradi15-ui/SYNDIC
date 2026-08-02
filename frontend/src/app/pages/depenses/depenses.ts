@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { DepenseService, Depense } from '../../services/depense';
 import { DepenseFormDialog } from './depense-form-dialog/depense-form-dialog';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-depenses',
@@ -18,7 +19,7 @@ export class Depenses implements OnInit {
   items: Depense[] = [];
   displayedColumns = ['date_depense', 'categorie', 'fournisseur', 'montant', 'residence_id', 'actions'];
 
-  constructor(private service: DepenseService, private dialog: MatDialog) {}
+  constructor(private service: DepenseService, private dialog: MatDialog, public authService: AuthService) {}
 
   ngOnInit(): void { this.load(); }
 
@@ -37,7 +38,6 @@ export class Depenses implements OnInit {
   }
 
   deleteItem(id: number): void {
-    if (!confirm('Supprimer cette dépense ?')) return;
     this.service.delete(id).subscribe({ next: () => this.load() });
   }
 }

@@ -1,7 +1,7 @@
 <div class="page">
   <div class="header">
     <h1>Dépenses</h1>
-    <button mat-raised-button color="primary" (click)="openCreate()">
+    <button mat-raised-button color="primary" (click)="openCreate()" *ngIf="authService.canManage()">
       <mat-icon>add</mat-icon> Nouvelle dépense
     </button>
   </div>
@@ -30,8 +30,8 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let r">
-        <button mat-icon-button color="primary" (click)="openEdit(r)"><mat-icon>edit</mat-icon></button>
-        <button mat-icon-button color="warn" (click)="deleteItem(r.id!)"><mat-icon>delete</mat-icon></button>
+        <button mat-icon-button color="primary" (click)="openEdit(r)" *ngIf="authService.canManage()"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="deleteItem(r.id!)" *ngIf="authService.canManage()"><mat-icon>delete</mat-icon></button>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

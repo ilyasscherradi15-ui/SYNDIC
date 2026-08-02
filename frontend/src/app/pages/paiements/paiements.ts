@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { PaiementService, Paiement } from '../../services/paiement';
 import { PaiementFormDialog } from './paiement-form-dialog/paiement-form-dialog';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-paiements',
@@ -18,7 +19,7 @@ export class Paiements implements OnInit {
   items: Paiement[] = [];
   displayedColumns = ['montant', 'date_paiement', 'moyen_paiement', 'cotisation_id', 'actions'];
 
-  constructor(private service: PaiementService, private dialog: MatDialog) {}
+  constructor(private service: PaiementService, private dialog: MatDialog, public authService: AuthService) {}
 
   ngOnInit(): void { this.load(); }
 
@@ -37,7 +38,6 @@ export class Paiements implements OnInit {
   }
 
   deleteItem(id: number): void {
-    if (!confirm('Supprimer ce paiement ?')) return;
     this.service.delete(id).subscribe({ next: () => this.load() });
   }
 }
