@@ -9,6 +9,7 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResidenceService, Residence } from '../../services/residence';
 import { ResidenceFormDialog } from './residence-form-dialog/residence-form-dialog';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-residences',
@@ -25,7 +26,8 @@ export class Residences implements OnInit {
     private residenceService: ResidenceService,
     private dialog: MatDialog,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -50,17 +52,18 @@ export class Residences implements OnInit {
   }
 
   deleteResidence(id: number): void {
-  this.residenceService.delete(id).subscribe({
-    next: () => {
-      this.loadResidences();
-      this.snackBar.open('Résidence supprimée.', 'Fermer', { duration: 3000 });
-    },
-    error: (err) => {
-      const message = err.error?.message || 'Une erreur est survenue.';
-      this.snackBar.open(message, 'Fermer', { duration: 4000 });
-    },
-  });
-}
+    this.residenceService.delete(id).subscribe({
+      next: () => {
+        this.loadResidences();
+        this.snackBar.open('Résidence supprimée.', 'Fermer', { duration: 3000 });
+      },
+      error: (err) => {
+        const message = err.error?.message || 'Une erreur est survenue.';
+        this.snackBar.open(message, 'Fermer', { duration: 4000 });
+      },
+    });
+  }
+
   goToImmeubles(residenceId: number): void {
     this.router.navigate(['/immeubles'], { queryParams: { residence_id: residenceId } });
   }

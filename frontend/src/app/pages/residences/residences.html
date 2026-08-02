@@ -1,9 +1,9 @@
 <div class="residences-page">
   <div class="header">
     <h1>Résidences</h1>
-    <button mat-raised-button color="primary" (click)="openCreateDialog()">
-      <mat-icon>add</mat-icon> Nouvelle résidence
-    </button>
+    <button mat-raised-button color="primary" (click)="openCreateDialog()" *ngIf="authService.canManage()">
+  <mat-icon>add</mat-icon> Nouvelle résidence
+  </button>
   </div>
 
   <table mat-table [dataSource]="residences" class="mat-elevation-z2">
@@ -30,13 +30,13 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let r">
-        <button mat-icon-button color="primary" (click)="openEditDialog(r)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="deleteResidence(r.id!)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
+  <button mat-icon-button color="primary" (click)="openEditDialog(r)" *ngIf="authService.canManage()">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button mat-icon-button color="warn" (click)="deleteResidence(r.id!)" *ngIf="authService.canManage()">
+    <mat-icon>delete</mat-icon>
+  </button>
+</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

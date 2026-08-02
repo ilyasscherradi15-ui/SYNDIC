@@ -56,4 +56,8 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
+  canManage(): boolean {
+  const role = this.currentUser()?.role;
+  return role === 'admin' || role === 'syndic';
+}
 }
