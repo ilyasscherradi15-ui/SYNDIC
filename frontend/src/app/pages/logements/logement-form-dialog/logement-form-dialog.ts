@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
@@ -7,6 +7,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { LogementService, Logement } from '../../../services/logement';
+import { ResidenceService, Residence } from '../../../services/residence';
+import { ProprietaireService, Proprietaire } from '../../../services/proprietaire';
+import { ImmeubleService, Immeuble } from '../../../services/immeuble';
 
 @Component({
   selector: 'app-logement-form-dialog',
@@ -15,19 +18,32 @@ import { LogementService, Logement } from '../../../services/logement';
   templateUrl: './logement-form-dialog.html',
   styleUrl: './logement-form-dialog.css',
 })
-export class LogementFormDialog {
+export class LogementFormDialog implements OnInit {
   item: Logement = {
     numero: '', type: 'appartement', quote_part: 0, statut: 'vacant',
     residence_id: 0, immeuble_id: null, proprietaire_id: 0,
   };
   isEdit = false;
 
+  residences: Residence[] = [];
+  proprietaires: Proprietaire[] = [];
+  immeubles: Immeuble[] = [];
+
   constructor(
     private service: LogementService,
+    private residenceService: ResidenceService,
+    private proprietaireService: ProprietaireService,
+    private immeubleService: ImmeubleService,
     private dialogRef: MatDialogRef<LogementFormDialog>,
     @Inject(MAT_DIALOG_DATA) public data: Logement | null
   ) {
     if (data) { this.item = { ...data }; this.isEdit = true; }
+  }
+
+  ngOnInit(): void {
+    this.residenceService.getAll().subscribe({ next: (data) => (this.residences = data) });
+    this.proprietaireService.getAll().subscribe({ next: (data) => (this.proprietaires = data) });
+    this.immeubleService.getAll().subscribe({ next: (data) => (this.immeubles = data) });
   }
 
   save(): void {
