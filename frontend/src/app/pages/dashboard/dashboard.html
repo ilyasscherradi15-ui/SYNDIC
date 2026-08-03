@@ -1,6 +1,10 @@
 <div class="dashboard">
   <h1>Tableau de bord</h1>
 
+  <button mat-raised-button color="primary" (click)="downloadRapport()" style="margin-bottom: 16px;">
+    <mat-icon>download</mat-icon> Télécharger le rapport financier (PDF)
+  </button>
+
   <div class="cards-grid">
     <mat-card class="kpi-card">
       <mat-card-content>
