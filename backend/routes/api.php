@@ -12,7 +12,7 @@ use App\Http\Controllers\Api\DepenseController;
 use App\Http\Controllers\Api\DocumentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\RapportController;
 // Routes publiques (pas besoin d'être connecté)
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('paiements', PaiementController::class)->only(['index', 'show']);
     Route::apiResource('depenses', DepenseController::class)->only(['index', 'show']);
     Route::apiResource('documents', DocumentController::class)->only(['index', 'show']);
-
+    Route::get('/rapports/financier', [RapportController::class, 'financier']);
     // Écriture réservée à admin/syndic
     Route::middleware('role:admin,syndic')->group(function () {
         Route::apiResource('residences', ResidenceController::class)->except(['index', 'show']);
@@ -44,5 +44,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('paiements', PaiementController::class)->except(['index', 'show']);
         Route::apiResource('depenses', DepenseController::class)->except(['index', 'show']);
         Route::apiResource('documents', DocumentController::class)->except(['index', 'show']);
+        Route::get('/rapports/financier', [RapportController::class, 'financier']);
     });
 });
