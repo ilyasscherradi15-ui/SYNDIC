@@ -1,82 +1,68 @@
-# Suivi du projet Syndic
+# Suivi du projet Syndic — État final
 
 ## Backend — Migrations (11/11) ✅
-- [x] Résidences
-- [x] Immeubles
-- [x] Propriétaires
-- [x] Logements
-- [x] Occupants
-- [x] Cotisations
-- [x] Paiements
-- [x] Dépenses
-- [x] Documents (relation polymorphe)
-- [x] Users (+ role)
-- [x] Residence_user (pivot)
+- [x] Résidences, Immeubles, Propriétaires, Logements, Occupants
+- [x] Cotisations, Paiements, Dépenses, Documents (polymorphe)
+- [x] Users (+ role), Residence_user (pivot)
 
 ## Backend — Modèles Eloquent (10/10) ✅
-- [x] Residence, Immeuble, Proprietaire, Logement, Occupant
-- [x] Cotisation, Paiement, Depense, Document, User
-- [x] Toutes les relations (hasMany, belongsTo, belongsToMany, morphTo/morphMany)
+- [x] Toutes les relations : hasMany, belongsTo, belongsToMany, morphTo/morphMany
 
-## Backend — Contrôleurs API (9/9) ✅
-- [x] ResidenceController
-- [x] ImmeubleController
-- [x] ProprietaireController
-- [x] LogementController
-- [x] OccupantController
-- [x] CotisationController
-- [x] PaiementController (logique métier auto : mise à jour du statut cotisation)
-- [x] DepenseController
-- [x] DocumentController
+## Backend — Contrôleurs API (10/10) ✅
+- [x] 9 contrôleurs CRUD complets
+- [x] AuthController (register, login, logout, me)
+- [x] RapportController (export PDF financier)
 
-## Backend — Authentification & Sécurité ✅
-- [x] Sanctum (register, login, logout, me)
+## Backend — Sécurité ✅
+- [x] Sanctum (authentification par token)
 - [x] Middleware CheckRole (admin/syndic/resident)
-- [x] Routes protégées par rôle sur les 9 modules
+- [x] Routes protégées par rôle sur les 9 modules (lecture ouverte, écriture admin/syndic)
 
 ## Frontend — Setup & Auth ✅
 - [x] Angular Material
-- [x] AuthService (login, register, logout, currentUser signal)
-- [x] HttpInterceptor (ajout automatique du token)
-- [x] AuthGuard (protection des routes)
+- [x] AuthService, HttpInterceptor, AuthGuard
 - [x] Page Login
 
 ## Frontend — Navigation ✅
 - [x] Layout avec sidebar (10 liens)
-- [x] Dashboard avec KPIs réels (résidences, logements, cotisations, impayés, dépenses)
+- [x] Dashboard avec KPIs réels + bouton export PDF
 
 ## Frontend — Pages CRUD (9/9) ✅
-- [x] Résidences (service + liste + formulaire dialog)
-- [x] Immeubles
-- [x] Propriétaires
-- [x] Logements (avec menus déroulants type/statut)
-- [x] Occupants
-- [x] Cotisations (avec menu déroulant type)
-- [x] Paiements
-- [x] Dépenses (avec menu déroulant catégorie)
-- [x] Documents
+- [x] Résidences, Immeubles, Propriétaires, Logements
+- [x] Occupants, Cotisations, Paiements, Dépenses, Documents
 
-## Frontend — Sécurité UI ✅
-- [x] Boutons créer/modifier/supprimer masqués selon le rôle (canManage())
+## Frontend — Qualité UX ✅
+- [x] Boutons créer/modifier/supprimer masqués selon le rôle
+- [x] Menus déroulants pour toutes les clés étrangères (Résidence, Immeuble, Logement, Propriétaire, Cotisation)
+- [x] Notifications d'erreur visibles (MatSnackBar)
+
+## Fonctionnalité métier ✅
+- [x] Mise à jour automatique du statut de cotisation lors d'un paiement
+- [x] Export PDF du rapport financier (KPIs + solde)
 
 ## Documentation ✅
-- [x] README.md
-- [x] PROGRESS.md
+- [x] README.md (installation, architecture, stack, rôles)
+- [x] PROGRESS.md (ce fichier)
 
-## Non fait / évolutions futures
+## Non fait / évolutions futures possibles
 - [ ] Navigation par relation (clic résidence → immeubles filtrés)
-- [ ] Export PDF/Excel des rapports
-- [ ] Génération automatique des cotisations (cron)
-- [ ] Upload réel de fichiers pour documents
-- [ ] Menus déroulants pour les clés étrangères (actuellement saisie d'ID manuelle)
-- [ ] Notifications impayés
+- [ ] Export Excel
+- [ ] Génération automatique des cotisations (tâche planifiée / cron)
+- [ ] Upload réel de fichiers pour documents (actuellement chemin texte)
+- [ ] Menu déroulant pour Document (documentable_id dépend du type choisi)
+- [ ] Notifications automatiques pour cotisations en retard
+- [ ] Tests automatisés (PHPUnit / Jasmine)
 
-## Bugs résolus (pour référence)
-- Permissions Docker (fichiers appartenant à root)
-- Ordre des migrations (timestamps identiques)
-- $fillable manquant sur plusieurs modèles (mass assignment)
-- Route api.php non chargée (bootstrap/app.php)
-- AuthenticationException / header Accept manquant
-- zone.js manquant (Angular ne démarrait pas)
-- NG0303 CommonModule manquant (*ngFor cassé)
-- window.confirm() bloqué par le navigateur
+## Bugs résolus durant le développement (retour d'expérience)
+- Permissions Docker (fichiers créés en root, non éditables)
+- Ordre des migrations (timestamps identiques → tri alphabétique incorrect)
+- $fillable manquant sur plusieurs modèles (protection mass assignment Eloquent)
+- Route api.php non chargée (bootstrap/app.php, Laravel 11+)
+- AuthenticationException mal gérée sans header Accept: application/json
+- zone.js manquant (Angular ne démarrait pas du tout)
+- NG0303 : CommonModule manquant dans un composant standalone (*ngFor cassé)
+- window.confirm() bloqué silencieusement par le navigateur
+- Erreur 422 due à des IDs de clé étrangère invalides (résolu par menus déroulants)
+
+## Stack finale
+Laravel 11 (PHP 8.4) · Angular 20 · PostgreSQL 16 · Docker Compose · Angular Material · Sanctum · DomPDF
