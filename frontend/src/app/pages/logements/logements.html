@@ -6,6 +6,12 @@
     </button>
   </div>
 
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Rechercher (numéro, type)</mat-label>
+    <input matInput [(ngModel)]="searchTerm" (ngModelChange)="applyFilter()" />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
   <table mat-table [dataSource]="items" class="mat-elevation-z2">
     <ng-container matColumnDef="numero">
       <th mat-header-cell *matHeaderCellDef>Numéro</th>
@@ -41,4 +47,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  <p *ngIf="items.length === 0" class="no-results">Aucun logement trouvé.</p>
 </div>
