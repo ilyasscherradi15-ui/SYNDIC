@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,20 +24,41 @@ export class Immeubles implements OnInit {
   items: Immeuble[] = [];
   displayedColumns = ['nom', 'nb_etages', 'residence_id', 'actions'];
   searchTerm = '';
+  filterResidenceId: number | null = null;
 
-  constructor(private service: ImmeubleService, private dialog: MatDialog, public authService: AuthService) {}
+  constructor(
+    private service: ImmeubleService,
+    private dialog: MatDialog,
+    public authService: AuthService,
+    private route: ActivatedRoute
+  ) {}
 
-  ngOnInit(): void { this.load(); }
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.filterResidenceId = params['residence_id'] ? Number(params['residence_id']) : null;
+      this.load();
+    });
+  }
 
   load(): void {
     this.service.getAll().subscribe({
-      next: (data) => { this.allItems = data; this.applyFilter(); },
+      next: (data) => {
+        this.allItems = this.filterResidenceId
+          ? data.filter((i) => i.residence_id === this.filterResidenceId)
+          : data;
+        this.applyFilter();
+      },
     });
   }
 
   applyFilter(): void {
     const term = this.searchTerm.toLowerCase().trim();
     this.items = !term ? this.allItems : this.allItems.filter((i) => i.nom.toLowerCase().includes(term));
+  }
+
+  clearResidenceFilter(): void {
+    this.filterResidenceId = null;
+    this.load();
   }
 
   openCreate(): void {

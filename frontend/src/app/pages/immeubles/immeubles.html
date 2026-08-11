@@ -6,6 +6,14 @@
     </button>
   </div>
 
+  <div *ngIf="filterResidenceId" class="filter-chip">
+    <mat-icon>filter_alt</mat-icon>
+    Filtré par résidence #{{ filterResidenceId }}
+    <button mat-icon-button (click)="clearResidenceFilter()" title="Retirer le filtre">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
   <mat-form-field appearance="outline" class="search-field">
     <mat-label>Rechercher (nom)</mat-label>
     <input matInput [(ngModel)]="searchTerm" (ngModelChange)="applyFilter()" />
