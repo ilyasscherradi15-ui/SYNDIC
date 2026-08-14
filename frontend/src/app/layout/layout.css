@@ -18,10 +18,20 @@
   flex: 1 1 auto;
 }
 
+.toolbar-title {
+  font-size: 18px;
+}
+
 .content {
   padding: 0;
 }
 
 .active-link {
   background-color: rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 599px) {
+  .toolbar-title {
+    font-size: 15px;
+  }
 }
