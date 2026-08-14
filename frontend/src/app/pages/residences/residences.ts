@@ -9,6 +9,7 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ResidenceService, Residence } from '../../services/residence';
 import { ResidenceFormDialog } from './residence-form-dialog/residence-form-dialog';
 import { AuthService } from '../../services/auth';
@@ -16,7 +17,10 @@ import { AuthService } from '../../services/auth';
 @Component({
   selector: 'app-residences',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatTableModule, MatButtonModule, MatIconModule, MatDialogModule, MatFormFieldModule, MatInputModule],
+  imports: [
+    CommonModule, FormsModule, MatTableModule, MatButtonModule, MatIconModule,
+    MatDialogModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,
+  ],
   templateUrl: './residences.html',
   styleUrl: './residences.css',
 })
@@ -25,6 +29,7 @@ export class Residences implements OnInit {
   residences: Residence[] = [];
   displayedColumns: string[] = ['nom', 'adresse', 'ville', 'actif', 'actions'];
   searchTerm = '';
+  loading = false;
 
   constructor(
     private residenceService: ResidenceService,
@@ -39,12 +44,17 @@ export class Residences implements OnInit {
   }
 
   loadResidences(): void {
+    this.loading = true;
     this.residenceService.getAll().subscribe({
       next: (data) => {
         this.allResidences = data;
         this.applyFilter();
+        this.loading = false;
       },
-      error: (err) => console.error('Erreur chargement résidences', err),
+      error: (err) => {
+        console.error('Erreur chargement résidences', err);
+        this.loading = false;
+      },
     });
   }
 

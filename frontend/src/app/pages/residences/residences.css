@@ -24,3 +24,9 @@ table {
   color: #888;
   padding: 24px;
 }
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
