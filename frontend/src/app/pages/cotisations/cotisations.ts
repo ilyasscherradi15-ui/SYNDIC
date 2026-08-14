@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CotisationService, Cotisation } from '../../services/cotisation';
 import { CotisationFormDialog } from './cotisation-form-dialog/cotisation-form-dialog';
 import { AuthService } from '../../services/auth';
@@ -14,7 +15,10 @@ import { AuthService } from '../../services/auth';
 @Component({
   selector: 'app-cotisations',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatTableModule, MatButtonModule, MatIconModule, MatDialogModule, MatFormFieldModule, MatInputModule],
+  imports: [
+    CommonModule, FormsModule, MatTableModule, MatButtonModule, MatIconModule,
+    MatDialogModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,
+  ],
   templateUrl: './cotisations.html',
   styleUrl: './cotisations.css',
 })
@@ -23,14 +27,17 @@ export class Cotisations implements OnInit {
   items: Cotisation[] = [];
   displayedColumns = ['type', 'montant', 'date_echeance', 'statut', 'logement_id', 'actions'];
   searchTerm = '';
+  loading = false;
 
   constructor(private service: CotisationService, private dialog: MatDialog, public authService: AuthService) {}
 
   ngOnInit(): void { this.load(); }
 
   load(): void {
+    this.loading = true;
     this.service.getAll().subscribe({
-      next: (data) => { this.allItems = data; this.applyFilter(); },
+      next: (data) => { this.allItems = data; this.applyFilter(); this.loading = false; },
+      error: () => { this.loading = false; },
     });
   }
 
