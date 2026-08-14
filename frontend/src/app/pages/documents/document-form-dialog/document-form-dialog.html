@@ -12,16 +12,32 @@
 
   <mat-form-field appearance="outline" class="full-width" *ngIf="!isEdit">
     <mat-label>Type lié</mat-label>
-    <mat-select [(ngModel)]="item.documentable_type">
+    <mat-select [(ngModel)]="item.documentable_type" (selectionChange)="onTypeChange()">
       <mat-option value="depense">Dépense</mat-option>
       <mat-option value="logement">Logement</mat-option>
       <mat-option value="residence">Résidence</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="full-width" *ngIf="!isEdit">
-    <mat-label>ID lié</mat-label>
-    <input matInput type="number" [(ngModel)]="item.documentable_id" required />
+  <mat-form-field appearance="outline" class="full-width" *ngIf="!isEdit && item.documentable_type === 'depense'">
+    <mat-label>Dépense</mat-label>
+    <mat-select [(ngModel)]="item.documentable_id" required>
+      <mat-option *ngFor="let d of depenses" [value]="d.id">{{ d.categorie }} — {{ d.montant }} DH ({{ d.date_depense }})</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width" *ngIf="!isEdit && item.documentable_type === 'logement'">
+    <mat-label>Logement</mat-label>
+    <mat-select [(ngModel)]="item.documentable_id" required>
+      <mat-option *ngFor="let l of logements" [value]="l.id">{{ l.numero }} ({{ l.type }})</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width" *ngIf="!isEdit && item.documentable_type === 'residence'">
+    <mat-label>Résidence</mat-label>
+    <mat-select [(ngModel)]="item.documentable_id" required>
+      <mat-option *ngFor="let r of residences" [value]="r.id">{{ r.nom }} — {{ r.ville }}</mat-option>
+    </mat-select>
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
