@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { OccupantService, Occupant } from '../../services/occupant';
 import { OccupantFormDialog } from './occupant-form-dialog/occupant-form-dialog';
 import { AuthService } from '../../services/auth';
@@ -14,7 +15,10 @@ import { AuthService } from '../../services/auth';
 @Component({
   selector: 'app-occupants',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatTableModule, MatButtonModule, MatIconModule, MatDialogModule, MatFormFieldModule, MatInputModule],
+  imports: [
+    CommonModule, FormsModule, MatTableModule, MatButtonModule, MatIconModule,
+    MatDialogModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,
+  ],
   templateUrl: './occupants.html',
   styleUrl: './occupants.css',
 })
@@ -23,14 +27,17 @@ export class Occupants implements OnInit {
   items: Occupant[] = [];
   displayedColumns = ['nom_complet', 'telephone', 'date_entree', 'date_sortie', 'logement_id', 'actions'];
   searchTerm = '';
+  loading = false;
 
   constructor(private service: OccupantService, private dialog: MatDialog, public authService: AuthService) {}
 
   ngOnInit(): void { this.load(); }
 
   load(): void {
+    this.loading = true;
     this.service.getAll().subscribe({
-      next: (data) => { this.allItems = data; this.applyFilter(); },
+      next: (data) => { this.allItems = data; this.applyFilter(); this.loading = false; },
+      error: () => { this.loading = false; },
     });
   }
 

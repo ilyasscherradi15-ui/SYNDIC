@@ -13,3 +13,4 @@ table { width: 100%; }
   margin-bottom: 16px;
   font-size: 14px;
 }
+.loading-container { display: flex; justify-content: center; padding: 40px; }

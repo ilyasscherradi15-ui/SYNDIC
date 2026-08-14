@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LogementService, Logement } from '../../services/logement';
 import { LogementFormDialog } from './logement-form-dialog/logement-form-dialog';
 import { AuthService } from '../../services/auth';
@@ -14,7 +15,10 @@ import { AuthService } from '../../services/auth';
 @Component({
   selector: 'app-logements',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatTableModule, MatButtonModule, MatIconModule, MatDialogModule, MatFormFieldModule, MatInputModule],
+  imports: [
+    CommonModule, FormsModule, MatTableModule, MatButtonModule, MatIconModule,
+    MatDialogModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,
+  ],
   templateUrl: './logements.html',
   styleUrl: './logements.css',
 })
@@ -23,14 +27,17 @@ export class Logements implements OnInit {
   items: Logement[] = [];
   displayedColumns = ['numero', 'type', 'quote_part', 'statut', 'residence_id', 'proprietaire_id', 'actions'];
   searchTerm = '';
+  loading = false;
 
   constructor(private service: LogementService, private dialog: MatDialog, public authService: AuthService) {}
 
   ngOnInit(): void { this.load(); }
 
   load(): void {
+    this.loading = true;
     this.service.getAll().subscribe({
-      next: (data) => { this.allItems = data; this.applyFilter(); },
+      next: (data) => { this.allItems = data; this.applyFilter(); this.loading = false; },
+      error: () => { this.loading = false; },
     });
   }
 

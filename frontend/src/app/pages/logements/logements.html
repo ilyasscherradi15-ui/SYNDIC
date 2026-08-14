@@ -12,7 +12,11 @@
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 
-  <table mat-table [dataSource]="items" class="mat-elevation-z2">
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <table mat-table [dataSource]="items" class="mat-elevation-z2" *ngIf="!loading">
     <ng-container matColumnDef="numero">
       <th mat-header-cell *matHeaderCellDef>Numéro</th>
       <td mat-cell *matCellDef="let r">{{ r.numero }}</td>
@@ -47,5 +51,5 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <p *ngIf="items.length === 0" class="no-results">Aucun logement trouvé.</p>
+  <p *ngIf="!loading && items.length === 0" class="no-results">Aucun logement trouvé.</p>
 </div>

@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ImmeubleService, Immeuble } from '../../services/immeuble';
 import { ImmeubleFormDialog } from './immeuble-form-dialog/immeuble-form-dialog';
 import { AuthService } from '../../services/auth';
@@ -15,7 +16,10 @@ import { AuthService } from '../../services/auth';
 @Component({
   selector: 'app-immeubles',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatTableModule, MatButtonModule, MatIconModule, MatDialogModule, MatFormFieldModule, MatInputModule],
+  imports: [
+    CommonModule, FormsModule, MatTableModule, MatButtonModule, MatIconModule,
+    MatDialogModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,
+  ],
   templateUrl: './immeubles.html',
   styleUrl: './immeubles.css',
 })
@@ -25,6 +29,7 @@ export class Immeubles implements OnInit {
   displayedColumns = ['nom', 'nb_etages', 'residence_id', 'actions'];
   searchTerm = '';
   filterResidenceId: number | null = null;
+  loading = false;
 
   constructor(
     private service: ImmeubleService,
@@ -41,13 +46,16 @@ export class Immeubles implements OnInit {
   }
 
   load(): void {
+    this.loading = true;
     this.service.getAll().subscribe({
       next: (data) => {
         this.allItems = this.filterResidenceId
           ? data.filter((i) => i.residence_id === this.filterResidenceId)
           : data;
         this.applyFilter();
+        this.loading = false;
       },
+      error: () => { this.loading = false; },
     });
   }
 
