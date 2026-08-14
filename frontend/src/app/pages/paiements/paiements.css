@@ -4,3 +4,11 @@ table { width: 100%; }
 .search-field { width: 100%; max-width: 400px; margin-bottom: 16px; }
 .no-results { text-align: center; color: #888; padding: 24px; }
 .loading-container { display: flex; justify-content: center; padding: 40px; }
+
+@media (max-width: 599px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}

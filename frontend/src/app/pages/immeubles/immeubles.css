@@ -14,3 +14,11 @@ table { width: 100%; }
   font-size: 14px;
 }
 .loading-container { display: flex; justify-content: center; padding: 40px; }
+
+@media (max-width: 599px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
