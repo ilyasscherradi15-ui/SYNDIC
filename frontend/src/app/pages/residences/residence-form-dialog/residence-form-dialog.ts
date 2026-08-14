@@ -21,6 +21,8 @@ import { ResidenceService, Residence } from '../../../services/residence';
 export class ResidenceFormDialog {
   residence: Residence = { nom: '', adresse: '', ville: '', actif: true };
   isEdit = false;
+  errorMessage = '';
+  saving = false;
 
   constructor(
     private residenceService: ResidenceService,
@@ -34,17 +36,31 @@ export class ResidenceFormDialog {
   }
 
   save(): void {
-    if (this.isEdit && this.residence.id) {
-      this.residenceService.update(this.residence.id, this.residence).subscribe({
-        next: () => this.dialogRef.close(true),
-        error: (err) => console.error('Erreur mise à jour', err),
-      });
-    } else {
-      this.residenceService.create(this.residence).subscribe({
-        next: () => this.dialogRef.close(true),
-        error: (err) => console.error('Erreur création', err),
-      });
+    this.errorMessage = '';
+    this.saving = true;
+
+    const obs = this.isEdit && this.residence.id
+      ? this.residenceService.update(this.residence.id, this.residence)
+      : this.residenceService.create(this.residence);
+
+    obs.subscribe({
+      next: () => {
+        this.saving = false;
+        this.dialogRef.close(true);
+      },
+      error: (err) => {
+        this.saving = false;
+        this.errorMessage = this.extractErrorMessage(err);
+      },
+    });
+  }
+
+  private extractErrorMessage(err: any): string {
+    if (err.error?.errors) {
+      const firstError = Object.values(err.error.errors)[0];
+      return Array.isArray(firstError) ? firstError[0] : String(firstError);
     }
+    return err.error?.message || 'Une erreur est survenue. Veuillez réessayer.';
   }
 
   cancel(): void {
