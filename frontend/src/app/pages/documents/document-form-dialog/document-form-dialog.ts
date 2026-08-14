@@ -21,10 +21,11 @@ import { ResidenceService, Residence } from '../../../services/residence';
 export class DocumentFormDialog implements OnInit {
   item: Document = { nom: '', chemin: '', documentable_type: 'depense', documentable_id: 0 };
   isEdit = false;
-
   depenses: Depense[] = [];
   logements: Logement[] = [];
   residences: Residence[] = [];
+  errorMessage = '';
+  saving = false;
 
   constructor(
     private service: DocumentService,
@@ -48,10 +49,23 @@ export class DocumentFormDialog implements OnInit {
   }
 
   save(): void {
+    this.errorMessage = '';
+    this.saving = true;
     const obs = this.isEdit && this.item.id
       ? this.service.update(this.item.id, this.item)
       : this.service.create(this.item);
-    obs.subscribe({ next: () => this.dialogRef.close(true), error: (err) => console.error(err) });
+    obs.subscribe({
+      next: () => { this.saving = false; this.dialogRef.close(true); },
+      error: (err) => { this.saving = false; this.errorMessage = this.extractErrorMessage(err); },
+    });
+  }
+
+  private extractErrorMessage(err: any): string {
+    if (err.error?.errors) {
+      const firstError = Object.values(err.error.errors)[0];
+      return Array.isArray(firstError) ? firstError[0] : String(firstError);
+    }
+    return err.error?.message || 'Une erreur est survenue. Veuillez réessayer.';
   }
 
   cancel(): void { this.dialogRef.close(false); }

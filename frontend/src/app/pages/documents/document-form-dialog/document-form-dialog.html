@@ -1,5 +1,7 @@
 <h2 mat-dialog-title>{{ isEdit ? 'Modifier' : 'Nouveau' }} document</h2>
 <mat-dialog-content>
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Nom</mat-label>
     <input matInput [(ngModel)]="item.nom" required />
@@ -42,5 +44,7 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button (click)="cancel()">Annuler</button>
-  <button mat-raised-button color="primary" (click)="save()">Enregistrer</button>
+  <button mat-raised-button color="primary" (click)="save()" [disabled]="saving">
+    {{ saving ? 'Enregistrement...' : 'Enregistrer' }}
+  </button>
 </mat-dialog-actions>
