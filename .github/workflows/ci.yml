@@ -39,6 +39,9 @@ jobs:
         run: php artisan test
 
   frontend-build:
+    - name: Run tests
+        working-directory: frontend
+        run: npx ng test --watch=false
     name: Build Frontend (Angular)
     runs-on: ubuntu-latest
 
